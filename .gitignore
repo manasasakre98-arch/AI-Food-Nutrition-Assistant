@@ -1,1 +1,6 @@
 .venv/
+food_classifier/data/food-10/
+food_classifier/models/*.pth
+food_classifier/test_images/
+__pycache__/
+*.pyc
