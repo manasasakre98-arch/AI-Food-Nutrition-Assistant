@@ -1,5 +1,6 @@
 import torch
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 from torchvision import transforms
 import io
@@ -28,6 +29,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model = create_model(NUM_CLASSES)

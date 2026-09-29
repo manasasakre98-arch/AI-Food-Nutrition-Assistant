@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>AI Food Nutrition Assistant</title>
+
+         <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Food Nutrition Assistant</h1>
+            <p>Upload a food image and discover its nutrition information.</p>
+        </header>
+        <main>
+            <section class="upload-card">
+                <h2>Upload Food Image</h2>
+                <input type="file" id="imageInput" accept="image/*">
+                <button id="predictButton">Predict Food</button>
+                <div id="preview"></div>
+            </section>
+            <section id="result" class="result-card">
+                <h2>Prediction Result</h2>
+                <div id="predictions"></div>
+                <div id="nutrition"></div>
+            </section>
+            <button id="resetButton" class="reset-bottom">
+                Analyze Another Image
+            </button>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
