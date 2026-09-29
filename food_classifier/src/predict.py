@@ -51,12 +51,21 @@ image_tensor = transform(image).unsqueeze(0)
 
 with torch.no_grad():
     outputs = model(image_tensor)
-
     probabilities = torch.softmax(outputs, dim=1)
 
-    confidence, predicted_class = torch.max(probabilities, dim=1)
+top_probabilities, top_indices = torch.topk(probabilities, 3)
 
-predicted_name = CLASS_NAMES[predicted_class.item()]
+top_confidence =top_probabilities[0][0].item()
 
-print(f"Prediction: {predicted_name}")
-print(f"Confidence: {confidence.item() * 100:.2f}%")
+if top_confidence < 0.50:
+    print("The model is not confident enough to identify this image.")
+else:
+    print("Top 3 predictions:")
+
+    for probability, index in zip(top_probabilities[0], top_indices[0]):
+        class_name = CLASS_NAMES[index.item()]
+        confidence = probability.item() * 100
+
+        print(f"{class_name}: {confidence:.2f}%")
+
+ 

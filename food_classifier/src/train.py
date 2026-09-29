@@ -25,13 +25,26 @@ train_loader, test_loader = create_dataloaders(
 )
 
 model = create_model(NUM_CLASSES)
+
+#Freeze all layers first.
+for parameter in model.parameters():
+    parameter.requires_grad = False
+
+#Unfreeze the final ResNet block.
+for parameter in model.layer4.parameters():
+    parameter.requires_grad = True
+
+#Keep the classifier trainable.
+for parameter in model.fc.parameters():
+    parameter.requires_grad = True
+
 model = model.to(device)
 
 criterion = nn.CrossEntropyLoss()
 
 optimizer = optim.Adam(
-    model.fc.parameters(),
-    lr=LEARNING_RATE,
+    filter(lambda parameter: parameter.requires_grad, model.parameters()),
+    lr=0.0001,
 )
 
 for epoch in range(NUM_EPOCHS):
