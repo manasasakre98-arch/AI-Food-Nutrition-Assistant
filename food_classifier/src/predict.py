@@ -3,6 +3,7 @@ from pathlib import Path
 import torch
 from PIL import Image
 from torchvision import models, transforms
+from nutrition import get_nutrition
 
 CLASS_NAMES = [
     "FriedChicked",
@@ -67,5 +68,16 @@ else:
         confidence = probability.item() * 100
 
         print(f"{class_name}: {confidence:.2f}%")
+
+    predicted_class = CLASS_NAMES[top_indices[0][0].item()]
+    nutrition = get_nutrition(predicted_class)
+
+    print("\nNutrition Information:")
+    print(f"Food: {predicted_class}")
+    print(f"Serving: {nutrition['serving']}")
+    print(f"Calories: {nutrition['calories']}")
+    print(f"Protein: {nutrition['protein']} g")
+    print(f"Carbs: {nutrition['carbs']} g")
+    print(f"Fat: {nutrition['fat']} g")
 
  
